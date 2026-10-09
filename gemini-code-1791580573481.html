@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Binary Search Game</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #0f172a, #1e293b);
+            color: #f8fafc;
+        }
+
+        .card {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            text-align: center;
+            width: 100%;
+            max-width: 380px;
+        }
+
+        h2 {
+            font-size: 1.25rem;
+            color: #94a3b8;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        #guess {
+            font-size: 5rem;
+            font-weight: 800;
+            color: #38bdf8;
+            margin: 1rem 0 2rem;
+            text-shadow: 0 0 20px rgba(56, 189, 248, 0.3);
+        }
+
+        .button-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        input[type="button"] {
+            background: #334155;
+            color: #f8fafc;
+            border: none;
+            padding: 0.9rem 1.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        input[type="button"]:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        input[type="button"]:active {
+            transform: translateY(0);
+        }
+
+        /* Specific styling for action buttons */
+        input[value="Lower"] {
+            background: #ef4444;
+        }
+        input[value="Lower"]:hover {
+            background: #dc2626;
+        }
+
+        input[value="Higher"] {
+            background: #3b82f6;
+        }
+        input[value="Higher"]:hover {
+            background: #2563eb;
+        }
+
+        input[value="You guessed!"] {
+            background: #10b981;
+            margin-top: 0.5rem;
+        }
+        input[value="You guessed!"]:hover {
+            background: #059669;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <h2>Is your number...</h2>
+        
+        <p id="guess">50</p>
+        
+        <div class="button-group">
+            <input type="button" value="Lower" onclick="guess(0)">
+            <input type="button" value="Higher" onclick="guess(1)">
+            <input type="button" value="You guessed!" onclick="guess(2)">
+        </div>
+    </div>
+    
+    <script>
+        var highValue = 100;
+        var lowValue = 0;
+
+        function guess(hl){
+            const target = document.getElementById("guess");
+            //alert(hl);
+           // alert("Is your number "+ target.innerHTML);
+            let guess = parseInt(target.innerHTML);
+            if (hl == 1){//take higher half
+                lowValue = parseInt(guess);
+                console.log(lowValue);
+            }
+            else if (hl == 0 ){//take lower half
+                highValue = guess;
+            }
+            guess = Math.floor((highValue+lowValue)/2) ;//will this yield a fraction?????
+
+            target.innerHTML = guess;
+            
+
+        }
+    </script>
+</body>
+</html>
