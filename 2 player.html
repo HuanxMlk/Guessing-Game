@@ -167,7 +167,65 @@
         font-size: 12px;
         letter-spacing: 1px;
     }
+    #difficulty {
+    grid-column: 1 / -1;
+    display: flex;
+    gap: 10px;
+    }
 
+    .diff-btn {
+        flex: 1;
+        padding: 12px 0;
+        background: #111612;
+        color: #a7b1a4;
+        border: 1px solid #414c3e;
+        border-radius: 8px;
+        font: inherit;
+        font-size: 13px;
+        font-weight: 800;
+        letter-spacing: 1px;
+        cursor: pointer;
+        transition: border-color 0.2s, color 0.2s, background 0.2s;
+    }
+
+    .diff-btn:hover:not(:disabled) {
+        border-color: #d6fa63;
+        color: #edf1e9;
+    }  
+
+    .diff-btn.active {
+    background: #d6fa63;
+    color: #17200d;
+    border-color: #d6fa63;
+}
+
+.diff-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.diff-btn.active:disabled {
+    opacity: 0.8;
+}
+#restart {
+    grid-column: 1 / -1;
+    padding: 14px 0;
+    background: transparent;
+    color: #a7b1a4;
+    border: 1px solid #414c3e;
+    border-radius: 8px;
+    font: inherit;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: border-color 0.2s, color 0.2s;
+}
+
+#restart:hover {
+    border-color: #d6fa63;
+    color: #d6fa63;
+}
     br {
         display: none;
     }
@@ -185,12 +243,17 @@
 </head>
 <body>
     <P id="title">Input your S E C R E T number</P>
+    <div id="difficulty">
+    <button class="diff-btn" onclick="setDifficulty(0)">EASY</button>
+    <button class="diff-btn active" onclick="setDifficulty(1)">MEDIUM</button>
+    <button class="diff-btn" onclick="setDifficulty(2)">HARD</button>
+    </div>
     <!-- Flow Player one sets number, player two guesses -->
         <label for="secretNum"> Set Secret Number </label>
         <input type="number"
                name="secret"
                id="secretNum"
-               placeholder="Enter a Number"> 
+               placeholder="Enter 1-99"> 
         <input type="button" 
                name="SetValue" 
                id="button"
@@ -201,5 +264,6 @@
         <span id="numbercount">10</span>
         <div id="history"></div>
         <div id="guesscount">Guesses: 0</div>
+    <button id="restart" onclick="restartGame()">RESTART</button>
 </body>
 </html>
