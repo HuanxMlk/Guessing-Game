@@ -35,6 +35,24 @@
         line-height: 1.6;
     }
 
+    #difficulty {
+        width: 100%;
+        margin: 12px 0;
+        padding: 12px;
+        color: #f8fafc;
+        background: #334155;
+        border: 1px solid #475569;
+        border-radius: 12px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+    }
+
+    #difficulty:focus-visible {
+        outline: 2px solid #38bdf8;
+        outline-offset: 2px;
+    }
+
     input[type="number"] {
         width: 100%;
         margin: 12px 0;
@@ -112,7 +130,12 @@
 </style>
 </head>
 <body>
-    <p>Guess a whole number from 0 to 100.</p>
+    <p>Guess a whole number from 0 to <span id="maxtext">100</span>.</p>
+    <select id="difficulty" onchange="guess(1)">
+        <option value="1">Easy (0 to 10)</option>
+        <option value="2" selected>Medium (0 to 100)</option>
+        <option value="3">Hard (0 to 1000)</option>
+    </select>
     <input id="number" type="number" min="0" max="100" step="1">
     <input id="submit" type="button" value="Guess" onclick="guess(0)">
     <input type="button" value="Restart" onclick="guess(1)">
@@ -121,21 +144,31 @@
     <p>History:</p>
     <p id="history"></p>
     <script>
-        var secretNumber = Math.floor(Math.random() * 101);
+        var maxValue = 100;
+        var secretNumber = Math.floor(Math.random() * (maxValue + 1));
         var guessCount = 0;
         var gameOver = false;
         function guess(hl) {
             if (hl == 1) {
-                secretNumber = Math.floor(Math.random() * 101);
+                var level = parseInt(document.getElementById("difficulty").value);
+                maxValue = 0;
+                while (level > 0) {
+                    maxValue = maxValue * 10 + 9;
+                    level--;
+                }
+                maxValue = maxValue + 1;
+                secretNumber = Math.floor(Math.random() * (maxValue + 1));
                 guessCount = 0;
                 gameOver = false;
+                document.getElementById("maxtext").innerHTML = maxValue;
+                document.getElementById("number").max = maxValue;
                 document.getElementById("number").value = "";
                 document.getElementById("number").disabled = false;
                 document.getElementById("submit").disabled = false;
                 document.getElementById("hint").innerHTML = "";
                 document.getElementById("count").innerHTML = 0;
                 document.getElementById("history").innerHTML = "";
-                alert("New game!");
+                alert("New game! Guess a whole number from 0 to " + maxValue + ".");
                 return;
             }
             if (gameOver) {
@@ -143,8 +176,8 @@
             }
             var input = document.getElementById("number").value;
             var number = Number(input);
-            if (input == "" || isNaN(number) || number < 0 || number > 100 || number != Math.floor(number)) {
-                alert("Enter a whole number from 0 to 100.");
+            if (input == "" || isNaN(number) || number < 0 || number > maxValue || number != Math.floor(number)) {
+                alert("Enter a whole number from 0 to " + maxValue + ".");
                 return;
             }
             guessCount = guessCount + 1;
