@@ -1,113 +1,169 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Binary Search Game</title>
     <style>
-    * {
-        box-sizing: border-box;
-        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-    }
+        * {
+            box-sizing: border-box;
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        }
 
-    html {
-        min-height: 100%;
-        background: linear-gradient(135deg, #0f172a, #1e293b);
-    }
+        html {
+            min-height: 100%;
+            background: linear-gradient(135deg, #0f172a, #1e293b);
+        }
 
-    body {
-        width: calc(100% - 32px);
-        max-width: 380px;
-        margin: 40px auto;
-        padding: 32px;
-        color: #f8fafc;
-        text-align: center;
-        background: rgba(30, 41, 59, 0.7);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 20px;
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-        backdrop-filter: blur(12px);
-    }
+        body {
+            width: calc(100% - 32px);
+            max-width: 380px;
+            margin: 40px auto;
+            padding: 32px;
+            color: #f8fafc;
+            text-align: center;
+            background: rgba(30, 41, 59, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(12px);
+        }
 
-    p {
-        color: #94a3b8;
-        font-size: 14px;
-        line-height: 1.6;
-    }
+        p {
+            color: #94a3b8;
+            font-size: 14px;
+            line-height: 1.6;
+        }
 
-    #guess {
-        display: block;
-        margin: 12px 0;
-        color: #38bdf8;
-        font-size: 80px;
-        font-weight: 800;
-        line-height: 1.2;
-        text-shadow: 0 0 20px rgba(56, 189, 248, 0.3);
-    }
+        #guess {
+            display: block;
+            margin: 12px 0;
+            color: #38bdf8;
+            font-size: 80px;
+            font-weight: 800;
+            line-height: 1.2;
+            text-shadow: 0 0 20px rgba(56, 189, 248, 0.3);
+        }
 
-    #range, #count {
-        color: #f8fafc;
-        font-weight: 600;
-    }
+        #range,
+        #count {
+            color: #f8fafc;
+            font-weight: 600;
+        }
 
-    button {
-        display: block;
-        width: 100%;
-        margin: 10px 0;
-        padding: 14px;
-        color: #f8fafc;
-        background: #334155;
-        border: none;
-        border-radius: 12px;
-        font-size: 16px;
-        font-weight: 600;
-        cursor: pointer;
-        transition: transform 0.2s, filter 0.2s;
-    }
+        button {
+            --edge: #1e293b;
+            --glow: rgba(0, 0, 0, 0.3);
+            display: block;
+            width: 100%;
+            margin: 12px 0;
+            padding: 14px 16px;
+            color: #f8fafc;
+            background: linear-gradient(180deg, #475569, #334155);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 14px;
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+            box-shadow: 0 4px 0 var(--edge), 0 8px 16px var(--glow);
+            transition: transform 0.15s, filter 0.15s, box-shadow 0.15s;
+        }
 
-    #lower {
-        background: #ef4444;
-    }
+        #lower {
+            --edge: #b91c1c;
+            --glow: rgba(239, 68, 68, 0.35);
+            background: linear-gradient(180deg, #f87171, #ef4444);
+        }
 
-    #higher {
-        background: #3b82f6;
-    }
+        #higher {
+            --edge: #1d4ed8;
+            --glow: rgba(59, 130, 246, 0.35);
+            background: linear-gradient(180deg, #60a5fa, #3b82f6);
+        }
 
-    #correct {
-        background: #10b981;
-    }
+        #correct {
+            --edge: #047857;
+            --glow: rgba(16, 185, 129, 0.35);
+            background: linear-gradient(180deg, #34d399, #10b981);
+        }
 
-    button:hover {
-        transform: translateY(-2px);
-        filter: brightness(1.1);
-    }
+        button:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.1);
+        }
 
-    button:active {
-        transform: translateY(0);
-    }
+        button:active {
+            transform: translateY(3px);
+            box-shadow: 0 1px 0 var(--edge), 0 2px 6px var(--glow);
+        }
 
-    button:disabled {
-        opacity: 0.4;
-        cursor: default;
-        transform: none;
-        filter: none;
-    }
+        button:disabled {
+            opacity: 0.4;
+            cursor: default;
+            transform: none;
+            filter: none;
+            box-shadow: 0 4px 0 var(--edge);
+        }
 
-    button:focus-visible {
-        outline: 2px solid #38bdf8;
-        outline-offset: 3px;
-    }
+        button:focus-visible {
+            outline: 2px solid #38bdf8;
+            outline-offset: 3px;
+        }
 
-    #history {
-        color: #cbd5e1;
-        text-align: left;
-        line-height: 1.8;
-    }
-</style>
+        #difficulty {
+            display: block;
+            width: 100%;
+            margin: 12px 0;
+            padding: 12px 40px 12px 16px;
+            color: #f8fafc;
+            background-color: #334155;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%2338bdf8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 16px center;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            appearance: none;
+            -webkit-appearance: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        #difficulty:hover {
+            border-color: #38bdf8;
+        }
+
+        #difficulty:focus-visible {
+            outline: none;
+            border-color: #38bdf8;
+            box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.3);
+        }
+
+        #difficulty option {
+            color: #f8fafc;
+            background: #1e293b;
+        }
+
+        #history {
+            color: #cbd5e1;
+            text-align: left;
+            line-height: 1.8;
+        }
+    </style>
 </head>
+
 <body>
-    <p>Think of a whole number from 0 to 100.</p>
-    <p>Is your number <span id="guess">50</span>?</p>
+    <p>Think of a whole number from 0 to <span id="maxtext">100</span>.</p>
+    <select id="difficulty" onchange="guess(3)">
+        <option value="1">Easy (0 to 10)</option>
+        <option value="2" selected>Medium (0 to 100)</option>
+        <option value="3">Hard (0 to 1000)</option>
+    </select>
+    <p>Is your number <span id="guess">50</span></p>
     <p>Range: <span id="range">0 to 100</span></p>
     <p>Guesses: <span id="count">1</span></p>
     <button id="lower" type="button" onclick="guess(0)">Lower</button>
@@ -117,20 +173,29 @@
     <p>History:</p>
     <p id="history"></p>
     <script>
+        var maxValue = 100;
         var lowValue = 0;
-        var highValue = 100;
-        var currentGuess = 50;
+        var highValue = maxValue;
+        var currentGuess = Math.floor(maxValue / 2);
         var guessCount = 1;
         var gameOver = false;
         function guess(answer) {
             if (answer == 3) {
+                var level = parseInt(document.getElementById("difficulty").value);
+                maxValue = 0;
+                while (level > 0) {
+                    maxValue = maxValue * 10 + 9;
+                    level--;
+                }
+                maxValue = maxValue + 1;
                 lowValue = 0;
-                highValue = 100;
-                currentGuess = 50;
+                highValue = maxValue;
+                currentGuess = Math.floor(maxValue / 2);
                 guessCount = 1;
                 gameOver = false;
                 document.getElementById("history").innerHTML = "";
-                alert("Choose a number from 0 to 100.");
+                document.getElementById("maxtext").innerHTML = maxValue;
+                alert("Choose a number from 0 to " + maxValue + ".");
             } else {
                 if (gameOver) {
                     return;
@@ -173,4 +238,5 @@
         }
     </script>
 </body>
+
 </html>
