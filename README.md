@@ -1,4 +1,4 @@
-# Guessing-Game By Jack and Liming  
+# Guessing-Game By Jack and Liming   https://huanxmlk.github.io/Guessing-Game/
 
 ## TEAM NAME----- Parallel Lines
 
