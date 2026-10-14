@@ -1,4 +1,4 @@
-# Guessing-Game By Jack and Liming    Live demo — 在线演示
+# Guessing-Game By Jack and Liming    [Live Demo](https://huanxmlk.github.io/Guessing-Game/)
 ## TEAM NAME----- Parallel Lines
 
 These are the complete document please copy them to a single Folder
