@@ -1,4 +1,4 @@
-# Guessing-Game By Jack and Liming  ![Live demo](https://img.shields.io/badge/Live-Demo-blue)
+# Guessing-Game By Jack and Liming  
 
 ## TEAM NAME----- Parallel Lines
 
